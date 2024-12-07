@@ -1,0 +1,7 @@
+encryptionsalt: v1:q6wT0nE6Ni0=:v1:YiR1Q0GoIZa2yfdR:DcnjDCNzd7Gyz3dhyGZIc2lPLoC7Ig==
+config:
+  aws:region: eu-west-2
+  tplt-web-spa:projectname: tplt
+  tplt-web-spa:servicename: web-spa
+  tplt-web-spa:hostedZone: robertdoneux.co.uk
+  tplt-web-spa:subDomain: test.robertdoneux.co.uk

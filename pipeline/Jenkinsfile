@@ -1,0 +1,129 @@
+pipeline {
+    
+    agent any
+
+    environment {
+        PULUMI_STACK_BUCKET = "tplt-web-spa-pulumi?region=eu-west-2"
+
+        // can use "pulumi stack -Q" to find this
+        PULUMI_STACK = "organization/tplt-web-spa/dev"
+    }
+
+    stages {
+            stage ("Setup") {
+                steps {
+                    sh "npm i"
+                }
+                post {
+                    success {
+                        echo "Setup success"
+                    }
+                    failure {
+                        echo "Setup failure"
+                    }
+                }
+                
+            }
+
+            stage ("Build") {
+                steps {
+                    sh "npm run build"
+                }
+                post {
+                    success {
+                        echo "Build success"
+                    }
+                    failure {
+                        echo "Build failure"
+                    }
+                }
+            }
+
+            stage ("Quality Gate: Static Analysis") {
+                steps {
+                    sh "npm run lint:ci"
+                    sh "npm run prettier:ci"
+                }
+                post {
+                    success {
+                        echo "Static Analysis Success"
+                    }
+                    failure {
+                        echo "Static Analysis Failure"
+                    }
+                }
+            }
+
+            stage ("Quality Gate: Composition Analysis") {
+                steps {
+                    sh "npm run test:ci"
+                }
+                post {
+                    success {
+                        echo "Quality composition analysis success"
+                    }
+                    failure {
+                        echo "Quality composition analysis failure"
+                    }
+                }
+            }
+
+            stage ("Report") {
+                steps {
+                    clover(cloverReportDir: '../dist/coverage', cloverReportFileName: 'clover.xml',
+                      healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
+                      unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],
+                      failingTarget: [methodCoverage: 25, conditionalCoverage: 25, statementCoverage: 25]
+                    )
+                    junit 'dist/junit/junit.xml'
+                }
+                post {
+                    success {
+                        echo "Repot success"
+                    }
+                    failure {
+                        echo "Report failure"
+                    }
+                }
+            }
+
+            stage ("Deploy") {
+
+                when {
+                    anyOf {
+                        branch 'master';
+                        branch 'development'
+                    }
+                }
+
+                steps {
+                    sh "curl -fsSL https://get.pulumi.com | sh"
+                    sh "$HOME/.pulumi/bin/pulumi version"
+
+                    withCredentials([aws(credentialsId: "AWS_CREDENTIALS")]){
+                        withEnv(["PATH+PULUMI=$HOME/.pulumi/bin"]) {
+                            sh "pulumi login 's3://${PULUMI_STACK_BUCKET}'"
+                            dir("iac") {
+                                sh "npm i"
+                                sh "pulumi stack select ${PULUMI_STACK}"
+                                withCredentials([string(credentialsId: 'PULUMI_ENCRYPTION_KEY', variable: "PULUMI_CONFIG_PASSPHRASE")]) {
+                                    sh "pulumi up --yes"
+                                }
+                            }  
+                        }
+
+                    }
+                }
+                post {
+                    success {
+                        echo "Deploy success"
+                    }
+                    failure {
+                        echo "Deploy failure"
+                    }
+                }
+            }
+        
+    }
+
+}
