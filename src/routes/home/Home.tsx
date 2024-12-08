@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className={styles['container']}>
       <h1>TPLT | WEB SPA</h1>
-      <img src={US_IMAGE_SERVICE_URL + '/get?filename=33f27c10-be7c-433f-a13e-1131c2e65c27'} />
+      {/* <img src={US_IMAGE_SERVICE_URL + '/get?filename=33f27c10-be7c-433f-a13e-1131c2e65c27'} /> */}
       
     </div>
   );
