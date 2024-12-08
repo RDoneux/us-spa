@@ -1,6 +1,6 @@
 import styles from './Home.module.css';
 
-const US_IMAGE_SERVICE_URL = process.env.US_IMAGE_SERVICE_URL;
+const US_IMAGE_SERVICE_URL = import.meta.env.US_IMAGE_SERVICE_URL;
 
 export default function Home() {
   return (
