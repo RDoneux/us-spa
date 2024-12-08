@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import axios, { AxiosResponse } from 'axios';
 
-const GATEWAY_SERVICE = import.meta.env.AUTH_SERVICE;
+const GATEWAY_SERVICE = import.meta.env.VITE_AUTH_SERVICE;
 
 export default function Home() {
 
