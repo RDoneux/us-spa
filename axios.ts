@@ -12,13 +12,17 @@ async function useRefreshToken() {
   }
 
   try {
-    const response: AxiosResponse = await axios.post(`${baseURL}/refresh-token`, {}, {
-      headers: { Authorization: `Bearer ${maybeRefreshToken}` }
-    });
+    const response: AxiosResponse = await axios.post(
+      `${baseURL}/refresh-token`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${maybeRefreshToken}` }
+      }
+    );
     save('access_token', response.data.accessToken);
     save('refresh_token', response.data.refreshToken);
     return response.data.accessToken;
-  } catch (error) {
+  } catch {
     throw new Error('Failed to refresh token');
   }
 }
