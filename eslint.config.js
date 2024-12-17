@@ -23,7 +23,7 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true }
       ],
-      '@typescript-eslint/no-explicit-any': 'off', // Allow the use of `any`
+      '@typescript-eslint/no-explicit-any': 'off' // Allow the use of `any`
     }
   }
 );

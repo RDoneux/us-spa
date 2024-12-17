@@ -14,7 +14,7 @@ export default function Timeline() {
       setEvents(response.data);
     };
     fetchTimeline();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return <p>{JSON.stringify(events)}</p>;
