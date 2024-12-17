@@ -1,12 +1,13 @@
 import { Button, FormControl, TextField } from '@mui/material';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { useState } from 'react';
-import axiosInstance from '../../../axios';
 import { save } from '../../services/LocalStorageService';
+import useAxios from '../../hooks/useAxios';
 
 export default function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const axios = useAxios();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -15,7 +16,7 @@ export default function Login() {
     const credentials = btoa(`${username}:${password}`);
 
     try {
-      const response: AxiosResponse = await axiosInstance.post(
+      const response: AxiosResponse = await axios.post(
         '/login',
         {},
         {
