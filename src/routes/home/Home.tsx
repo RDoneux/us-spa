@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
 import styles from './Home.module.css';
-import axiosInstance from '../../hooks/useAxios';
-import { AxiosResponse } from 'axios';
 import Timeline from '../../components/timeline/Timeline';
 
 export default function Home() {

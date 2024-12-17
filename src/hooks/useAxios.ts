@@ -7,7 +7,7 @@ import { useRef } from 'react';
 const BASE_URL = import.meta.env.VITE_GATEWAY_SERVICE;
 const HEALTH_ENDPOINT = '/actuator/health';
 const SERVICE_CONNECTION_ATTEMPTS = 5;
-const ACCESS_TOKEN_KEY  = 'access_token';
+const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
 // Axios hook to handle token refresh and service spinup
@@ -65,17 +65,17 @@ async function attachAccessToken(
   let maybeAccessToken = load(ACCESS_TOKEN_KEY);
 
   if (tokenIsValid(maybeAccessToken)) {
-    console.log("Attaching access token", maybeAccessToken);
+    console.log('Attaching access token', maybeAccessToken);
     config.headers['Authorization'] = `Bearer ${maybeAccessToken}`;
     return config;
   }
 
   try {
     maybeAccessToken = await refreshToken();
-    console.log("Refreshing access token", maybeAccessToken);
+    console.log('Refreshing access token', maybeAccessToken);
     config.headers['Authorization'] = `Bearer ${maybeAccessToken}`;
-  } catch (error) {
-    console.log("Failed to refresh access token");
+  } catch {
+    console.log('Failed to refresh access token');
     navigate('/login');
   }
   return config;
@@ -87,9 +87,9 @@ async function attachAccessToken(
 async function refreshToken(): Promise<string> {
   const maybeRefreshToken = load(REFRESH_TOKEN_KEY);
 
-  console.log("Using refreshing token", maybeRefreshToken);
+  console.log('Using refreshing token', maybeRefreshToken);
   if (!tokenIsValid(maybeRefreshToken)) {
-    console.log("Invalid refresh token");
+    console.log('Invalid refresh token');
     throw new Error('Invalid refresh token');
   }
 

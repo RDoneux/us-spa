@@ -14,7 +14,7 @@ export default function Timeline() {
       setEvents(response.data);
     };
     fetchTimeline();
-  }, []);
+  }, [axios]);
 
   return <p>{JSON.stringify(events)}</p>;
 }
