@@ -15,7 +15,7 @@ export default function Timeline() {
   useEffect(() => {
     const fetchTimeline = async () => {
       const response: AxiosResponse = await axios.get(
-        '/events?dateFrom=2025-02-04T07:18:48&itemNumber=10'
+        `/events?dateFrom=${new Date()}&itemNumber=10`
       );
       reduxDispatch(setEvents(response.data.events));
     };
