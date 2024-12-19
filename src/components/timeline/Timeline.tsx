@@ -17,7 +17,6 @@ export default function Timeline() {
       const response: AxiosResponse = await axios.get(
         '/events?dateFrom=2025-02-04T07:18:48&itemNumber=10'
       );
-      console.log(response.data);
       reduxDispatch(setEvents(response.data.events));
     };
     fetchTimeline();
@@ -37,7 +36,7 @@ export default function Timeline() {
           <div
             key={event.id}
             style={{ gridRowStart: index + 1 }}
-            className={`col-start-3 col-span-1 h-[50px] w-[50px] self-center rounded-full bg-gray-300`}
+            className={`col-start-3 col-span-1 h-[50px] w-[50px] self-center rounded-full bg-[#242424] border-neutral-400 border`}
           ></div>
           <Event key={event.id} {...event} row={index} />
           <div

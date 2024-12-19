@@ -6,6 +6,7 @@ import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
 import Loading from './routes/loading/Loading';
 import ServiceUnavailable from './routes/service-unavailable/ServiceUnavailable';
+import Header from './components/header/Header';
 
 const darkTheme = createTheme({
   palette: {
@@ -17,13 +18,19 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route path="/service-unavailable" element={<ServiceUnavailable />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Header />
+        <div className="mt-[30px]">
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/loading" element={<Loading />} />
+            <Route
+              path="/service-unavailable"
+              element={<ServiceUnavailable />}
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </ThemeProvider>
   );

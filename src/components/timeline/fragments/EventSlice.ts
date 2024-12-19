@@ -22,9 +22,12 @@ const eventSlice = createSlice({
   reducers: {
     setEvents(state: EventState, action: PayloadAction<TimelineEvent[]>) {
       return { ...state, events: action.payload };
+    },
+    addEvent(state: EventState, action: PayloadAction<TimelineEvent>) {
+      return { ...state, events: [...state.events, action.payload] };
     }
   }
 });
 
-export const { setEvents } = eventSlice.actions;
+export const { setEvents, addEvent } = eventSlice.actions;
 export const eventReducer = eventSlice.reducer;
