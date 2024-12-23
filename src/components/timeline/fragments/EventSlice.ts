@@ -9,25 +9,28 @@ export interface TimelineEvent {
 }
 
 interface EventState {
-  events: TimelineEvent[];
+  events: { [key: string]: TimelineEvent[] };
 }
 
 const initialState: EventState = {
-  events: []
+  events: {}
 };
 
 const eventSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
-    setEvents(state: EventState, action: PayloadAction<TimelineEvent[]>) {
-      return { ...state, events: action.payload };
-    },
-    addEvent(state: EventState, action: PayloadAction<TimelineEvent>) {
-      return { ...state, events: [...state.events, action.payload] };
+    setEvents(
+      state: EventState,
+      action: PayloadAction<{ [key: string]: TimelineEvent[] }>
+    ) {
+      return { ...state, events: { ...state.events, ...action.payload } };
     }
+    // addEvent(state: EventState, action: PayloadAction<TimelineEvent>) {
+    //   return { ...state, events: { ...state.events, ...action.payload } };
+    // }
   }
 });
 
-export const { setEvents, addEvent } = eventSlice.actions;
+export const { setEvents } = eventSlice.actions;
 export const eventReducer = eventSlice.reducer;

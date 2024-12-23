@@ -33,6 +33,7 @@ export default function Event(event: EventProps) {
 
   return (
     <Card
+      key={event.id + '_event'}
       style={{ gridRowStart: event.row + 1 }}
       className={`w-full min-h-full self-center ${event.row % 2 === 0 ? 'col-start-1' : 'col-start-5'}`}
     >

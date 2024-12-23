@@ -5,7 +5,6 @@ import { ChangeEvent, MouseEvent, useState } from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { enGB } from 'date-fns/locale';
 import { useDispatch } from 'react-redux';
-import { addEvent } from '../timeline/fragments/EventSlice';
 import useAxios from '../../hooks/useAxios';
 import { AxiosResponse } from 'axios';
 
@@ -39,7 +38,7 @@ export default function AddEventButton() {
 
     const response: AxiosResponse = await axios.post('/events', formData);
 
-    reduxDispatch(addEvent(response.data));
+    // reduxDispatch(addEvent(response.data));
     setShowModal(false);
   }
 
