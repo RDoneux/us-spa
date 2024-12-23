@@ -39,7 +39,12 @@ export default function Event(event: EventProps) {
     >
       <CardActionArea className="h-full">
         {imageUrl && (
-          <CardMedia component="img" src={imageUrl} alt={event.title} />
+          <CardMedia
+            component="img"
+            src={imageUrl}
+            loading="lazy"
+            alt={event.title}
+          />
         )}
         <CardContent>
           <Typography gutterBottom variant="h4" component="div">

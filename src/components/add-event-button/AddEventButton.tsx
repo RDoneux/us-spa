@@ -7,6 +7,8 @@ import { enGB } from 'date-fns/locale';
 import { useDispatch } from 'react-redux';
 import useAxios from '../../hooks/useAxios';
 import { AxiosResponse } from 'axios';
+import { addEvent } from '../timeline/fragments/EventSlice';
+import { convertSpecificDateToDateWindow } from '../../services/Utils';
 
 export default function AddEventButton() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -38,7 +40,11 @@ export default function AddEventButton() {
 
     const response: AxiosResponse = await axios.post('/events', formData);
 
-    // reduxDispatch(addEvent(response.data));
+    const dateWindow = convertSpecificDateToDateWindow(
+      date?.toISOString() || ''
+    );
+
+    reduxDispatch(addEvent({ [dateWindow]: [response.data] }));
     setShowModal(false);
   }
 
